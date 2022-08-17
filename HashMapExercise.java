@@ -1,6 +1,32 @@
+import java.util.*;
+
 class HashMapExercise{
   public static void main(String[] args){
-    
+	Scanner scnr = new Scanner(System.in);
+	  
+    Map<String, String> makeByModel = new HashMap<String, String>();
+	  makeByModel.put("Civic", "Honda");
+	  makeByModel.put("CX-5", "Mazda");
+	  makeByModel.put("Rav4", "Toyota");
+	  makeByModel.put("F150", "Ford");
+	  makeByModel.put("Accord", "Honda");
+	  makeByModel.put("Corolla", "Toyota");
+	  makeByModel.put("Silverado", "Chevrolet");
+	  makeByModel.put("Corvette", "Chevrolet");
+	  makeByModel.put("Mustang", "Ford");
+	  makeByModel.put("Camry", "Toyota");
+	  makeByModel.put("Escape", "Ford");
+	  makeByModel.put("Outback", "Subaru");
+	  makeByModel.put("Wrangler", "Jeep");
+	  makeByModel.put("Charger", "Dodge");
+	  makeByModel.put("Grand Cherokee", "Jeep");
+	  
+	  
+	  System.out.print("Hello valued customer! Would you like to browse our current selection
+			   of cars, or woud you like to request a new car to be added to our
+			   dealership? (Answer 'b' to browse or 'a' to add new car): ");
+	  char customerChoice = scnr.next();
+	  
   }
 }
 /*Hash Map Tutorial Code
