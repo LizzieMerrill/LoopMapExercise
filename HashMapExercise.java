@@ -27,9 +27,7 @@ class HashMapExercise{
 	  //recursive method that prompts user until they select a valid option to browse, add or quit
 	public static void introDialogue(){
 		
-	  System.out.print("Hello valued customer! Would you like to browse our current selection
-			   of cars, or would you like to request a new car be added to our dealership?
-			   (Answer 'b' to browse, 'a' to add new car or 'q' to quit): ");
+	  System.out.print("Hello valued customer! Would you like to browse our current selection of cars, or would you like to request a new car be added to our dealership? (Answer 'b' to browse, 'a' to add new car, 'l' to list your car options or 'q' to quit): ");
 			   
 	  char customerChoice = scnr.next();
 	  
@@ -38,7 +36,23 @@ class HashMapExercise{
 		  	browseCars();
 		  break;
 		  case a:
-		  	addCar();
+			System.out.print("Real quick, can we get the model of the car you want to add just so we can check if we already have it? ");
+			  String model2 = scnr.nextLine();
+			if (findModel(model2) == false){
+				addCar();
+			}
+		  	else{
+				String make2 = makeByModel.get(model2);
+				System.out.println("Oh, we already have that car in stock!");
+				System.out.printf("So you're looking for a %s? Our %s selection is right over here...\n", model2, make2);
+				System.out.printf("We will have a sales rep with you shortly to discuss the details of purchasing a %s %s. Thank you for shopping at our dealership, have a great day!", make2, model2);
+			}
+			
+		  break;
+		  case l:
+			  listSelection();
+			  System.out.println("Those are all of the cars we have at the dealership right now.\n\n");
+			  introDialogue();
 		  break;
 		  case q:
 		 	 System.out.println("Thank you, come again!");
@@ -54,11 +68,7 @@ class HashMapExercise{
 			   
 	public static void browseCars(){
 		
-		System.out.println("Do you have a specific car model in mind,
-				   or would you like to see a list of what cars
-				   are in stock right now? (Answer 'y' is you have
-				   a model in mind, 'n' if you would like to 
-				   list your options, or 'q' to quit): ");
+	System.out.println("Do you have a specific car model in mind, or would you like to see a list of what cars are in stock right now? (Answer 'y' is you have a model in mind, 'l' if you would like to list your options, 'a' to add a car to the dealership, or 'q' to quit): ");
 				   
 		char customerChoice2 = scnr.next();
 				   
@@ -66,19 +76,49 @@ class HashMapExercise{
 		  case y:
 		  	System.out.println("What model is the car you're looking for? ");
 			String carModel = scnr.nextLine();
-			if(){
-				System.out.printf("Oh, you're looking for a %s? Our %s selection is right over here...\n );
+			if(findModel(carModel) == true){
+				String carMake = makeByModel.get(carModel);
+				System.out.printf("Oh, you're looking for a %s? Our %s selection is right over here...\n", carModel, carMake);
+				System.out.printf("We will have a sales rep with you shortly to discuss the details of purchasing a %s %s. Thank you for shopping at our dealership, have a great day!", carMake, carModel);
 			}
 			else{
-				System.out.printf"We're terribly sorry, but we do not have %s model cars in stock right now.
-						   Would you like to add them to our dealership? (Answer 'y' to add, 'b' to
-						   browse again, 
-			}
+			    System.out.printf("We're terribly sorry, but we do not have %s model cars in stock right now. Would you like to add them to our dealership? (Answer 'a' to add, 'b' to browse again, 'l' to list all available cars, or 'q' to quit): ", carModel);
+			    char customerChoice3 = scnr.next();
+			    switch(customerChoice3){
+				    case a:
+					    String model3 = addCar();
+					    String make3 = makeByModel.get(model3);
+					    System.out.println("There, we have added your wanted car to our dealership. Our %s selection is right over here...\n", make3);
+					    System.out.printf("We will have a sales rep with you shortly to discuss the details of purchasing a %s %s. Thank you for shopping at our dealership, have a great day!", make3, model3); 
+				    break;
+				    case b:
+					    browseCars();
+				    break;
+				    case l:
+					    listSelection();
+					    System.out.print("Now, knowing this, ");
+					    browseCars();
+				    break;
+				    case q:
+					    System.out.println("Thank you, come again!");
+				    break;
+				    default:
+					    System.out.println("Whoops, we didn't understand that! Please try again!");
+		  		            browseCars();//repeats dialogue if user fails to select valid option
+				    break;
+			    }//end switch case
+			}//end else bracket
 		  break;
-		  case n:
+		  case l:
 		  	listSelection();
 			System.out.print("Now, knowing this, ");
 			browseCars();
+		  break;
+		  case a:
+			String model3 = addCar();
+			String make3 = makeByModel.get(model3);
+			System.out.println("There, we have added your wanted car to our dealership. Our %s selection is right over here...\n", make3);
+			System.out.printf("We will have a sales rep with you shortly to discuss the details of purchasing a %s %s. Thank you for shopping at our dealership, have a great day!", make3, model3); 
 		  break;
 		  case q:
 		 	 System.out.println("Thank you, come again!");
@@ -89,107 +129,43 @@ class HashMapExercise{
 		  break;
 	  }
 	}//end of browseCars method
-			   
-			   
-	public static void addCar(){
+	
+	//finds out if model is at dealership
+	public static boolean findModel(String model){
+		int isInHashMap = 0;
 		
+		for(String key: makeByModel.keySet()) {
+		    if(model.equalsIgnoreCase(key) == true){
+		    	isInHashMap++;
+		    }
+		}
+		if(isInHashMap == 0){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}//end of findModel method
+						  
+	public static String addCar(){
+		System.out.print("Enter the make of the car you have in mind to add to our dealership: ");
+		String wantedMake = scnr.nextLine();
+		System.out.print("Enter the model of the car you have in mind to add to our dealership: ");
+		String wantedModel = scnr.nextLine();
+		makeByModel.put(wantedModel, wantedMake);
+		
+		return wantedModel;
 	}//end of addCar method
 			   
 	public static void listSelection(){
-	
+	     System.out.println("Here is a list of all the cars we have for sale today: \n");
+	     //prints all car makes and models available at the dealership
+	     for(Map.Entry<String, String> entry: makeByModel.entrySet()) {
+		String key = entry.getKey();
+		String value = entry.getValue();
+		System.out.println(value + " " + key);
+	     }
+	     System.out.println("\n\n\n");
 	}//end of listSelection method
-  }
-}
-/*Hash Map Tutorial Code
-
-import java.util.*;
-
-public class MapExample1 {
-	public static void main(String[] args) {
-		Scanner scnr = new Scanner(System.in);
-		
-		
-		Map<String, Integer> ageByName = null;
-		
-		//Map is another interface, thus you can only initialize
-		//a sub-type of it, such as a HashMap
-		
-		/***************************************************/
-		//Map<Key, Value>
-		//THOSE ARE PARAMETERS OF ANY MAP
-		/***************************************************/
-		
-		Map<String, Integer> ageByName2 = new HashMap<String, Integer>();
-		Map<String, Integer> ageByName3 = new TreeMap<String, Integer>();
-		
-		ageByName2.put("Lizzie", 19);
-		ageByName2.put("Casey", 18);
-		ageByName2.put("Tara", 20);
-		
-		System.out.println(ageByName2);
-		
-		System.out.println(ageByName2.get("Casey"));//prints 18
-		System.out.println(ageByName2.get("Lizzie"));//prints 19
-		
-		System.out.println(ageByName2.containsKey("Scott"));//false
-		
-		System.out.println(ageByName2.containsValue(20));//true
-		//^ containsValue() is a relatively slow method
-		//because it checks all values in the hashmap
-		
-		System.out.println(ageByName2.isEmpty());//false
-		ageByName2.clear();
-		System.out.println(ageByName2.isEmpty());//true
-		
-		
-		
-		//maps strings to integers
-		Map<String, Integer> nameToAge = new HashMap<String, Integer>();
-		
-		System.out.println("/n/n/n/nEnter name: ");
-		String name = scnr.nextLine();
-		System.out.println("ENter age: ");
-		int age = Integer.parseInt(scnr.nextLine());
-		
-		nameToAge.put(name, age);
-		
-		System.out.println("Enter name to query: ");
-		String name2 = scnr.nextLine();
-		System.out.print("The person named " + name2 + 
-				" has an age of ");
-		System.out.println(nameToAge.get(name2));
-		
-		
-		
-		
-		
-		//maps integers to strings
-		Map<Integer, String> nameByAge = new HashMap<>();
-		//^ params only need to be in declaration
-		
-		nameByAge.put(21, "Joan");
-		nameByAge.put(34, "Anna");
-		nameByAge.put(55, "Mike");
-		nameByAge.put(42, "Daniel");
-		nameByAge.put(34, "Aaron");//overwrites "Anna"
-		//^for 34 slot in the hashmap
-		
-		System.out.println(nameByAge.get(21));//prints "Joan"
-		
-		
-		Map<Integer, List<String>> namesByAge = new HashMap<>();
-		
-		List<String> newList = new ArrayList<>();
-		newList.add("Joan");
-		namesByAge.put(21, newList);
-		newList = new ArrayList<>();
-		newList.add("Anna");
-		newList.add("Aaron");
-		namesByAge.put(34, newList);
-		newList = new ArrayList<>();
-		newList.add("Mike");
-		//etc etc etc
-	}
-}
-
-*/
+  }//end main method
+}//end of class
