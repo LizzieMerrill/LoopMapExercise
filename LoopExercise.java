@@ -5,7 +5,7 @@ class LoopExercise{
     Scanner scnr = new Scanner(System.in);//declaring and initializing scanner for prompts
    
     //Declaring arraylist and setting up prompting for loop
-    ArrayList<Integer[]> arrayListOfNums = new ArrayList<Integer[]>();
+    ArrayList<Integer> arrayListOfNums = new ArrayList<Integer>();
     int numOfNumbersCounter = 0;
     
     //prompts user for numbers, displays progress and adds numbers to arraylist
@@ -41,8 +41,7 @@ class LoopExercise{
       }//end of nested if statement
     }//end of for loop
     
-    System.out.printf("The five numbers you entered added up to %d and multiplied out to %d! 
-                      The smallest number was %d and the largest number was %d! Thanks for using my program! :)", sum, product, smallestNum, largestNum);
+    System.out.printf("The five numbers you entered added up to %d and multiplied out to %d! The smallest number was %d and the largest number was %d! Thanks for using my program! :)", sum, product, smallestNum, largestNum);
     
     
   }//end of main
