@@ -1,7 +1,8 @@
-import java.util.ArrayList;
+import java.util.*;
 
 class LoopExercise{
   public static void main(String[] args){
+    Scanner scnr = new Scanner(System.in);//declaring and initializing scanner for prompts
    
     //Declaring arraylist and setting up prompting for loop
     ArrayList<Integer> arrayListOfNums = new ArrayList<Integer>();
